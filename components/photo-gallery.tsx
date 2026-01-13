@@ -6,14 +6,12 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 
 const galleryImages = [
-  { id: 1, src: "/images/RIC_8319.jpg", alt: "Engagement photo", width: 2, height: 2 },
+  { id: 1, src: "/images/RIC_7559.jpg", alt: "Engagement photo", width: 2, height: 2 },
   { id: 2, src: "/images/RIC_7366.jpg", alt: "Dancing moment", width: 1, height: 1 },
   { id: 3, src: "/images/RIC_7463.jpg", alt: "Bride preparation", width: 1, height: 2 },
-  { id: 4, src: "/images/RIC_7519.jpg", alt: "Groom portrait", width: 2, height: 1 },
-  { id: 5, src: "/images/RIC_7559.jpg", alt: "Ceremony kiss", width: 2, height: 1 },
+  { id: 5, src: "/images/RIC_7519.jpg", alt: "Ceremony kiss", width: 2, height: 1 },
   { id: 6, src: "/images/RIC_7624.jpg", alt: "Reception", width: 1, height: 1 },
   { id: 7, src: "/images/RIC_7629.jpg", alt: "Couple silhouette", width: 1, height: 1 },
-  { id: 8, src: "/images/RIC_8618.jpg", alt: "Couple silhouette", width: 2, height: 1 },
   { id: 9, src: "/images/RIC_7655.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 10, src: "/images/RIC_7758.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 11, src: "/images/RIC_7852.jpg", alt: "Sunset portrait", width: 1, height: 1 },
@@ -27,10 +25,10 @@ const galleryImages = [
   { id: 19, src: "/images/RIC_8096.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 20, src: "/images/RIC_8105.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 21, src: "/images/RIC_8231.jpg", alt: "Sunset portrait", width: 1, height: 1 },
-  { id: 22, src: "/images/RIC_8258.jpg", alt: "Sunset portrait", width: 1, height: 1 },
+  { id: 22, src: "/images/RIC_8258.jpg", alt: "Sunset portrait", width: 2, height: 1 },
   { id: 23, src: "/images/RIC_8282.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 24, src: "/images/RIC_8306.jpg", alt: "Sunset portrait", width: 1, height: 1 },
-  { id: 25, src: "/images/RIC_8319.jpg", alt: "Sunset portrait", width: 1, height: 1 },
+  { id: 25, src: "/images/RIC_8319.jpg", alt: "Sunset portrait", width: 2, height: 1 },
   { id: 26, src: "/images/RIC_8359.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 27, src: "/images/RIC_8360.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 28, src: "/images/RIC_8418.jpg", alt: "Sunset portrait", width: 1, height: 1 },
@@ -38,7 +36,7 @@ const galleryImages = [
   { id: 30, src: "/images/RIC_8536.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 31, src: "/images/RIC_8594.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 32, src: "/images/RIC_8611.jpg", alt: "Sunset portrait", width: 1, height: 1 },
-  { id: 33, src: "/images/RIC_8622.jpg", alt: "Sunset portrait", width: 1, height: 1 },
+  { id: 33, src: "/images/RIC_8622.jpg", alt: "Sunset portrait", width: 2, height: 1 },
   { id: 34, src: "/images/RIC_8646.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 35, src: "/images/RIC_8661.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 36, src: "/images/RIC_8717.jpg", alt: "Sunset portrait", width: 1, height: 1 },
@@ -48,7 +46,7 @@ const galleryImages = [
   { id: 40, src: "/images/RIC_8814.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 41, src: "/images/RIC_8857.jpg", alt: "Sunset portrait", width: 1, height: 1 },
   { id: 42, src: "/images/RIC_8887.jpg", alt: "Sunset portrait", width: 1, height: 1 },
-  { id: 43, src: "/images/RIC_8918.jpg", alt: "Sunset portrait", width: 1, height: 1 },
+  { id: 43, src: "/images/RIC_8918.jpg", alt: "Sunset portrait", width: 2, height: 1 },
   { id: 44, src: "/images/RIC_8927.jpg", alt: "Sunset portrait", width: 1, height: 1 },
 
 ]

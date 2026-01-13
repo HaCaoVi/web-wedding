@@ -8,32 +8,19 @@ const _playfairDisplay = Playfair_Display({ subsets: ["latin"], variable: "--fon
 const _lora = Lora({ subsets: ["latin"], variable: "--font-serif-body" })
 
 export const metadata: Metadata = {
-  title: "Thanh Thùy ♥ Cao Vĩ - Wedding 2026",
+  title: "IThufy ♥ ICao",
   description: "Join us for a celebration of love on January 29, 2026",
   generator: "v0.app",
   icons: {
     icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
+      { url: "/icon-light-32x32.png", media: "(prefers-color-scheme: light)" },
+      { url: "/icon-dark-32x32.png", media: "(prefers-color-scheme: dark)" },
+      { url: "/icon.svg", type: "image/svg+xml" },
     ],
-    apple: "/apple-icon.png",
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    userScalable: false,
+    apple: "/images/RIC_8727.jpg",
   },
 }
+
 
 export default function RootLayout({
   children,
