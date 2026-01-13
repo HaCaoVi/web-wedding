@@ -9,7 +9,7 @@ export function Footer() {
       <div
         className="absolute inset-0 opacity-10"
         style={{
-          backgroundImage: "url('/footer-leaf-pattern.svg')",
+          backgroundImage: "url('/images/RIC_8918.jpg')",
           backgroundRepeat: "repeat",
         }}
       ></div>

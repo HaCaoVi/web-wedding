@@ -12,9 +12,14 @@ interface Particle {
   vy: number
   life: number
 }
+interface IntroEnvelopeProps {
+  onOpen: () => void
+}
 
-export function IntroEnvelope() {
+export function IntroEnvelope({ onOpen }: IntroEnvelopeProps) {
   const [isOpened, setIsOpened] = useState(false)
+
+
   const [particles, setParticles] = useState<Particle[]>([])
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
@@ -44,6 +49,7 @@ export function IntroEnvelope() {
 
     generateParticles()
 
+
     const interval = setInterval(() => {
       setParticles((prev) =>
         prev
@@ -66,9 +72,10 @@ export function IntroEnvelope() {
   }
 
   const handleEnvelopeClick = () => {
+    if (isOpened) return
     setIsOpened(true)
+    onOpen() // 🔥 click này hợp lệ với browser → audio.play()
   }
-
   return (
     <>
       <motion.div
