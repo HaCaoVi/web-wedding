@@ -67,13 +67,13 @@ export function HeroBanner() {
       >
         <motion.div
           className="glassmorphism rounded-2xl px-8 py-12 max-w-2xl"
-          animate={{
-            boxShadow: [
-              "0 0 30px rgba(114, 174, 165, 0.2)",
-              "0 0 60px rgba(114, 174, 165, 0.4)",
-              "0 0 30px rgba(114, 174, 165, 0.2)",
-            ],
-          }}
+          // animate={{
+          //   boxShadow: [
+          //     "0 0 30px rgba(114, 174, 165, 0.2)",
+          //     "0 0 60px rgba(114, 174, 165, 0.4)",
+          //     "0 0 30px rgba(114, 174, 165, 0.2)",
+          //   ],
+          // }}
           transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
         >
           <motion.h1
@@ -111,7 +111,7 @@ export function HeroBanner() {
         className="relative z-10 bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20"
       >
         <div className="flex justify-center items-center gap-2">
-          {[1, 2, 3, 25, 26, 27, 28, 29, 30, 31].map((day, idx) => (
+          {[21, 22, 23, 25, 26, 27, 28, 29, 30, 31].map((day, idx) => (
             <motion.div
               key={day}
               className={`w-10 h-10 flex items-center justify-center rounded-lg font-serif text-sm transition-all ${day === 29 ? "bg-gold text-white glow-pulse" : "bg-white/10 text-white/50 hover:bg-white/20"
