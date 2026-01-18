@@ -2,11 +2,11 @@
 import { motion } from "framer-motion"
 
 const storyLines = [
-  "Two souls found each other on a sunny afternoon...",
-  "Laughter became their language, love their destination.",
-  "Through every moment, big and small, they knew.",
-  "This wasn't just love—it was forever.",
-  "Now, they invite you to celebrate the beginning.",
+  "Mọi thứ bắt đầu từ một lời chào giản đơn",
+  "Nhưng đã thay đổi cả cuộc đời chúng tôi.",
+  "Qua những khoảnh khắc cười đùa, những buổi tối ấm áp bên nhau,",
+  "Chúng tôi đã cùng nhau trưởng thành, học hỏi và yêu thương.",
+  "Hôm nay, chúng tôi hân hoan chia sẻ hành trình này với những người thân yêu.",
 ]
 
 export function LoveStory() {
