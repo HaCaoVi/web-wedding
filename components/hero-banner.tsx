@@ -10,7 +10,12 @@ interface CalendarParticle {
   delay: number
 }
 
-export function HeroBanner() {
+interface IProps {
+  day: number,
+  time: string
+}
+
+export function HeroBanner({ day, time }: IProps) {
   const [particles, setParticles] = useState<CalendarParticle[]>([])
 
   useEffect(() => {
@@ -27,7 +32,7 @@ export function HeroBanner() {
   // Calendar configuration
   const calendarYear = 2026
   const calendarMonthIndex = 0 // January (0 = Jan)
-  const [selectedDate, setSelectedDate] = useState<{ day: number; monthOffset: number }>({ day: 29, monthOffset: 0 })
+  const [selectedDate, setSelectedDate] = useState<{ day: number; monthOffset: number }>({ day: day, monthOffset: 0 })
   const daysInMonth = new Date(calendarYear, calendarMonthIndex + 1, 0).getDate()
   // Format month names in Vietnamese and capitalize first letter
   const formatMonthName = (offset = 0) => {
@@ -40,6 +45,7 @@ export function HeroBanner() {
   const firstDayOfWeek = new Date(calendarYear, calendarMonthIndex, 1).getDay() // 0 = Sun, 1 = Mon
   const leadingEmpty = (firstDayOfWeek + 6) % 7 // convert so Monday=0 ... Sunday=6
   const totalCells = Math.ceil((leadingEmpty + daysInMonth) / 7) * 7
+  console.log("🚀 ~ HeroBanner ~ totalCells:", totalCells)
   const prevMonthDays = new Date(calendarYear, calendarMonthIndex, 0).getDate()
   const calendarCells = Array.from({ length: totalCells }, (_, i) => {
     const dayIndex = i - leadingEmpty + 1
@@ -174,16 +180,16 @@ export function HeroBanner() {
           })}
         </div>
 
-        <p className="text-center text-white/60 text-md mt-4 font-serif">{`${selectedDate.day} ${selectedMonthName} ${calendarYear} • 10:00 A.M`}</p>
+        <p className="text-center text-white/60 text-md mt-4 font-serif">{`${selectedDate.day} ${selectedMonthName} ${calendarYear} • ${time}`}</p>
       </motion.div>
 
       {/* Swipe indicator (tay lướt) */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center"
+        className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center"
         role="img"
         aria-label="Gợi ý vuốt lên"
       >
-        <div className="flex items-center justify-center w-12 h-12">
+        <div className="flex items-center justify-center w-12 h-5">
           <motion.svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

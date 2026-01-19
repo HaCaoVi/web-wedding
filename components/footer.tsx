@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 
-export function Footer() {
+export function Footer({ day }: { day: number }) {
   return (
     <footer className="relative w-full bg-sage text-cream overflow-hidden">
       {/* Decorative background */}
@@ -69,7 +69,7 @@ export function Footer() {
           className="space-y-2 mb-12"
         >
           <p className="font-serif text-2xl">Thanh Thùy & Cao Vĩ</p>
-          <p className="font-serif-body text-sm text-cream/60"> 29 Tháng 1 2026</p>
+          <p className="font-serif-body text-sm text-cream/60"> {day} Tháng 1 2026</p>
         </motion.div>
 
         {/* Footer links */}
