@@ -11,7 +11,6 @@ import WeddingApp from "@/components/wedding-app"
 export default function Home() {
   return (
     <main className="bg-background text-foreground overflow-x-hidden">
-      <WeddingApp />
       <HeroBanner />
       {/* Invitation card inserted below HeroBanner */}
       <InvitationCard
@@ -22,8 +21,9 @@ export default function Home() {
         venueName="Tại gia"
         address="Hòa Quới, Hòa Tân, Châu Thành, Đồng Tháp"
         mapsLabel="Chỉ đường"
-        coords={{ lat: 10.1743449, lng: 105.831008, alt: '1162m' }}
+        coords={{ lat: 10.174201731328207, lng: 105.83362987855745, alt: '1162m' }}
       />
+      <WeddingApp />
       <LoveStory />
       <PhotoGallery />
       <LocationAndRsvp />

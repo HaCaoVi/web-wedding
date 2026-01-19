@@ -83,7 +83,11 @@ export function IntroEnvelope({ onOpen }: IntroEnvelopeProps) {
         animate={{ opacity: isOpened ? 0 : 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.8, delay: isOpened ? 1 : 0 }}
-        className="fixed inset-0 bg-gradient-to-b from-sage-light/20 via-cream to-beige flex items-center justify-center z-50"
+        className={`
+  fixed inset-0 bg-gradient-to-b from-sage-light/20 via-cream to-beige
+  flex items-center justify-center z-50
+  ${isOpened ? "pointer-events-none" : "pointer-events-auto"}
+`}
         onMouseMove={handleMouseMove}
       >
         <div className="relative w-full h-full flex items-center justify-center">
