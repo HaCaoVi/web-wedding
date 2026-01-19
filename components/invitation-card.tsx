@@ -82,7 +82,7 @@ export default function InvitationCard({
                 {/* ===== INVITE ===== */}
                 <div className="text-sm text-white/60 uppercase">Kính mời quý khách</div>
                 <div className="text-sm text-white/60 uppercase mb-2">
-                    tham dự tiệc chung vui của gia đình chúng tôi
+                    tham dự tiệc chung vui cùng gia đình chúng tôi
                 </div>
 
                 <h3 className="font-serif text-4xl text-cream mb-2">{bride}</h3>
