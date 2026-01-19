@@ -8,29 +8,48 @@ export function LocationAndRsvp() {
   const [formData, setFormData] = useState({
     name: "",
     participants: "1",
+    note: "",
   })
+
   const [submitted, setSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [open, setOpen] = useState(false)
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (isLoading) return
     setIsLoading(true)
 
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+
+      if (!res.ok) throw new Error("Submit failed")
+
       setSubmitted(true)
-      setIsLoading(false)
-      setFormData({ name: "", participants: "1" })
+      setFormData({ name: "", participants: "1", note: "" })
+
       setTimeout(() => setSubmitted(false), 3500)
-    }, 1200)
+    } catch (err) {
+      alert("Gửi thất bại, thử lại nhé 😢")
+    } finally {
+      setIsLoading(false)
+    }
   }
+
 
   return (
     <section className="relative py-28 px-6 bg-gradient-to-b from-black via-zinc-900 to-black overflow-hidden">
@@ -130,7 +149,6 @@ export function LocationAndRsvp() {
                   </span>
                   <span className={`transition ${open ? "rotate-180" : ""}`}>▾</span>
                 </button>
-
                 {/* Options */}
                 <AnimatePresence>
                   {open && (
@@ -170,7 +188,23 @@ export function LocationAndRsvp() {
               </div>
             </div>
 
+            <div>
+              <label className="block mb-2 text-white/70 text-sm">
+                Lời nhắn
+              </label>
+              <textarea
+                name="note"
+                maxLength={500}
+                value={formData.note}
+                onChange={handleChange}
+                placeholder="Hãy gửi những lời iu thương..."
+                className="w-full px-6 py-4 rounded-2xl bg-black/40 border border-white/10 text-white"
+              />
+              <p className="text-xs text-white/40 mt-1">
+                {formData.note.length}/500
+              </p>
 
+            </div>
 
             {/* Submit */}
             <motion.button
@@ -227,10 +261,10 @@ export function LocationAndRsvp() {
                   ♥
                 </motion.div>
                 <p className="text-white text-lg mb-1">
-                  Cảm ơn bạn!
+                  Cảm ơn bà nhooooooo!
                 </p>
                 <p className="text-white/60 text-sm">
-                  Chúng mình rất mong được gặp bạn ✨
+                  Chúng toai rất mong được gặp bạn ✨
                 </p>
               </motion.div>
             )}
