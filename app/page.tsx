@@ -7,10 +7,14 @@ import { LocationAndRsvp } from "@/components/location-and-rsvp"
 import { Footer } from "@/components/footer"
 import InvitationCard from "@/components/invitation-card"
 import WeddingApp from "@/components/wedding-app"
+import { FloatingComments } from "@/components/live-comments"
 
 export default function Home() {
+
+
   return (
     <main className="bg-background text-foreground overflow-x-hidden">
+      <FloatingComments />
       <HeroBanner />
       {/* Invitation card inserted below HeroBanner */}
       <InvitationCard

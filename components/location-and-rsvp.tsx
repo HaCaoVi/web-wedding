@@ -264,7 +264,7 @@ export function LocationAndRsvp() {
                   Cảm ơn bà nhooooooo!
                 </p>
                 <p className="text-white/60 text-sm">
-                  Chúng toai rất mong được gặp bạn ✨
+                  Chúng toai rất mong được gặp bàaaaaa ✨
                 </p>
               </motion.div>
             )}
