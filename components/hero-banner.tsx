@@ -174,7 +174,7 @@ export function HeroBanner() {
           })}
         </div>
 
-        <p className="text-center text-white/60 text-md mt-4 font-serif">{`${selectedDate.day} ${selectedMonthName} ${calendarYear} • 10:00`}</p>
+        <p className="text-center text-white/60 text-md mt-4 font-serif">{`${selectedDate.day} ${selectedMonthName} ${calendarYear} • 10:00 A.M`}</p>
       </motion.div>
 
       {/* Swipe indicator (tay lướt) */}

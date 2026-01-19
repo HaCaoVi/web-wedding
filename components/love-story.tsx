@@ -52,7 +52,7 @@ export function LoveStory() {
           transition={{ duration: 1 }}
           className="mb-12"
         >
-          <h2 className="font-serif text-5xl md:text-6xl text-cream mb-8 tracking-wide">Our Love Story</h2>
+          <h2 className="font-serif text-5xl md:text-6xl text-cream mb-8 tracking-wide">Câu chuyện của chúng toaiii</h2>
         </motion.div>
 
         {/* Story lines reveal on scroll */}

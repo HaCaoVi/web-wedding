@@ -55,10 +55,9 @@ export function Footer() {
 
         {/* Main thank you message */}
         <motion.div className="mb-12">
-          <h3 className="font-serif text-4xl md:text-5xl mb-6 text-balance">With all our love and gratitude</h3>
+          <h3 className="font-serif text-4xl md:text-5xl mb-6 text-balance">Với tất cả tình yêu thương và lòng biết ơn của chúng toaiii</h3>
           <p className="font-serif-body text-lg text-cream/80 leading-relaxed max-w-2xl mx-auto">
-            Thank you for being part of our journey. Your love, support, and presence mean the world to us as we embark
-            on this beautiful chapter of our lives together.
+            Cảm ơn các bạn đã đồng hành cùng chúng tôi trên chặng đường này. Tình yêu thương, sự ủng hộ và sự hiện diện của các bạn có ý nghĩa vô cùng lớn đối với chúng tôi khi chúng ta cùng nhau bước vào chương mới tươi đẹp này của cuộc đời.
           </p>
         </motion.div>
 
@@ -70,11 +69,11 @@ export function Footer() {
           className="space-y-2 mb-12"
         >
           <p className="font-serif text-2xl">Thanh Thùy & Cao Vĩ</p>
-          <p className="font-serif-body text-sm text-cream/60">January 29, 2026</p>
+          <p className="font-serif-body text-sm text-cream/60"> 29 Tháng 1 2026</p>
         </motion.div>
 
         {/* Footer links */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
@@ -91,7 +90,7 @@ export function Footer() {
           <a href="#" className="font-serif-body text-cream/70 hover:text-gold transition-colors">
             Contact
           </a>
-        </motion.div>
+        </motion.div> */}
 
         {/* Copyright */}
         <motion.p
@@ -100,7 +99,7 @@ export function Footer() {
           transition={{ delay: 0.9, duration: 0.8 }}
           className="font-serif-body text-xs text-cream/40 pt-8 border-t border-cream/20"
         >
-          © 2026 Thanh Thùy & Cao Vĩ. Made with love & creativity.
+          © 2026 Thanh Thùy & Cao Vĩ. Được làm bằng tình iuuuuuuuu.
         </motion.p>
       </motion.div>
     </footer>

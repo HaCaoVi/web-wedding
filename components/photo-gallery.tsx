@@ -73,7 +73,7 @@ export function PhotoGallery() {
         transition={{ duration: 1 }}
         className="max-w-7xl mx-auto"
       >
-        <h2 className="font-serif text-5xl md:text-6xl text-sage mb-4 text-center">Our Memories</h2>
+        <h2 className="font-serif text-5xl md:text-6xl text-sage mb-4 text-center">Album tình iu</h2>
         <div className="h-1 w-24 bg-gold mx-auto mb-12 rounded-full"></div>
 
         {/* Masonry gallery */}

@@ -17,8 +17,8 @@ export default function Home() {
         bride="Thanh Thùy"
         groom="Cao Vĩ"
         dateLabel="29 Tháng 1 2026"
-        timeLabel="10:00"
-        venueName="Tại gia"
+        timeLabel="10:00 A.M"
+        venueName="Tư gia"
         address="Hòa Quới, Hòa Tân, Châu Thành, Đồng Tháp"
         mapsLabel="Chỉ đường"
         coords={{ lat: 10.174201731328207, lng: 105.83362987855745, alt: '1162m' }}

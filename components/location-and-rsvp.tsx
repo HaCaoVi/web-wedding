@@ -1,184 +1,242 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 export function LocationAndRsvp() {
-  const [formData, setFormData] = useState({ name: "", phone: "" })
+  const [formData, setFormData] = useState({
+    name: "",
+    participants: "1",
+  })
   const [submitted, setSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [open, setOpen] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
-    // Simulate form submission
     setTimeout(() => {
       setSubmitted(true)
       setIsLoading(false)
-      setFormData({ name: "", phone: "" })
-      setTimeout(() => setSubmitted(false), 3000)
-    }, 1000)
+      setFormData({ name: "", participants: "1" })
+      setTimeout(() => setSubmitted(false), 3500)
+    }, 1200)
   }
 
   return (
-    <>
-      {/* Location Section */}
-      <section className="relative w-full py-20 px-6 bg-gradient-to-b from-cream to-beige/30">
+    <section className="relative py-28 px-6 bg-gradient-to-b from-black via-zinc-900 to-black overflow-hidden">
+      {/* soft glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[520px] h-[520px] bg-green-500/10 blur-[140px] rounded-full" />
+
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="relative max-w-xl mx-auto"
+      >
+        {/* Header */}
+        <div className="text-center mb-14">
+          <h2 className="font-serif text-4xl md:text-5xl text-white mb-4">
+            Xác nhận tham dự
+          </h2>
+          <div className="h-px w-24 bg-gradient-to-r from-transparent via-green-400 to-transparent mx-auto mb-6" />
+          <p className="text-white/60 text-sm leading-relaxed">
+            Sự hiện diện của bạn là niềm vinh hạnh cho gia đình chúng tôi
+          </p>
+        </div>
+
+        {/* Glass Card */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="max-w-4xl mx-auto"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="
+            relative rounded-3xl p-8
+            bg-white/5 backdrop-blur-xl
+            border border-white/10
+            shadow-2xl
+          "
         >
-          <h2 className="font-serif text-5xl md:text-6xl text-sage mb-4 text-center">Celebration Details</h2>
-          <div className="h-1 w-24 bg-gold mx-auto mb-12 rounded-full"></div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Left: Location info */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="flex flex-col justify-center"
-            >
-              <div className="space-y-8">
-                <div>
-                  <h3 className="font-serif text-2xl text-sage mb-2">Venue</h3>
-                  <p className="font-serif-body text-lg text-sage/70">Tổ chức tại gia</p>
-                  <p className="font-serif-body text-sm text-sage/50 mt-1">Family celebration</p>
-                </div>
-
-                <div>
-                  <h3 className="font-serif text-2xl text-sage mb-2">Date</h3>
-                  <p className="font-serif-body text-lg text-sage/70">January 29, 2026</p>
-                </div>
-
-                <div>
-                  <h3 className="font-serif text-2xl text-sage mb-2">Time</h3>
-                  <p className="font-serif-body text-lg text-sage/70">10:00 AM</p>
-                </div>
-
-                <div className="pt-8 border-t border-gold/20">
-                  <p className="font-serif-body text-sm text-sage/60 leading-relaxed">
-                    Join us for an intimate celebration of love and commitment as two hearts become one.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Right: Map placeholder */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="relative h-80 rounded-2xl overflow-hidden shadow-2xl"
-            >
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.7859893891587!2d107.05869731532156!3d10.796829261358338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317530c2635e0000%3A0xc24c4fa99b7f5f0!2sVi%E1%BB%87t%20Nam!5e0!3m2!1svi!2s!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen={true}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* RSVP Section */}
-      <section className="relative w-full py-20 px-6 bg-sage/5">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="max-w-2xl mx-auto"
-        >
-          <h2 className="font-serif text-5xl md:text-6xl text-sage mb-4 text-center">RSVP</h2>
-          <div className="h-1 w-24 bg-gold mx-auto mb-12 rounded-full"></div>
-
-          <motion.form
-            onSubmit={handleSubmit}
-            className="space-y-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Name field */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name */}
             <div>
-              <label htmlFor="name" className="block font-serif-body text-sage mb-2">
-                Full Name
+              <label className="block mb-2 text-white/70 text-sm">
+                Họ và tên
               </label>
               <input
                 type="text"
-                id="name"
                 name="name"
+                required
                 value={formData.name}
                 onChange={handleChange}
-                required
-                className="w-full px-6 py-4 bg-white border-2 border-sage/20 rounded-lg focus:outline-none focus:border-gold text-sage placeholder-sage/40 text-lg font-serif-body transition-colors"
-                placeholder="Tên của bạn"
+                placeholder="Nguyễn Văn A"
+                className="
+                  w-full px-6 py-4 rounded-full
+                  bg-black/40 border border-white/10
+                  text-white placeholder-white/40
+                  focus:outline-none focus:ring-1 focus:ring-green-400
+                  transition
+                "
               />
             </div>
 
-            {/* Phone field */}
+            {/* Participants */}
             <div>
-              <label htmlFor="phone" className="block font-serif-body text-sage mb-2">
-                Phone Number
+              <label className="block mb-2 text-white/70 text-sm">
+                Số người tham dự
               </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                className="w-full px-6 py-4 bg-white border-2 border-sage/20 rounded-lg focus:outline-none focus:border-gold text-sage placeholder-sage/40 text-lg font-serif-body transition-colors"
-                placeholder="Số điện thoại của bạn"
-              />
+
+              <div className="relative">
+                {/* Trigger */}
+                <button
+                  type="button"
+                  onClick={() => setOpen(!open)}
+                  className="
+        w-full px-6 py-4 rounded-full
+        bg-black/40 border border-white/10
+        text-white text-left
+        flex items-center justify-between
+        hover:border-white/30
+        focus:ring-2 focus:ring-green-400/30
+        transition
+      "
+                >
+                  <span className="flex items-center gap-2">
+                    <svg
+                      className="w-5 h-5 text-white/70"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+
+                    <span>{formData.participants} người</span>
+                  </span>
+                  <span className={`transition ${open ? "rotate-180" : ""}`}>▾</span>
+                </button>
+
+                {/* Options */}
+                <AnimatePresence>
+                  {open && (
+                    <motion.ul
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="
+            absolute z-20 mt-3 w-full
+            bg-black/80 backdrop-blur-xl
+            border border-white/10
+            rounded-2xl
+            overflow-hidden
+            shadow-2xl
+          "
+                    >
+                      {[1, 2, 3, 4, 5].map((num) => (
+                        <li
+                          key={num}
+                          onClick={() => {
+                            setFormData({ ...formData, participants: String(num) })
+                            setOpen(false)
+                          }}
+                          className="
+                px-6 py-3 text-white
+                hover:bg-green-500/20
+                cursor-pointer
+                transition
+              "
+                        >
+                          {num} người
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
-            {/* Submit button */}
+
+
+            {/* Submit */}
             <motion.button
               type="submit"
               disabled={isLoading}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full py-4 bg-gradient-to-r from-sage to-sage-light text-white font-serif-body text-lg rounded-lg hover:shadow-xl transition-all disabled:opacity-70 relative overflow-hidden"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="
+                relative w-full py-4 mt-6
+                rounded-full
+                bg-gradient-to-r from-emerald-500 to-green-600
+                text-black font-semibold tracking-wide
+                shadow-lg shadow-green-500/30
+                overflow-hidden
+                disabled:opacity-70
+              "
             >
-              <motion.div
-                animate={isLoading ? { x: ["0%", "100%"] } : { x: "100%" }}
-                transition={{ duration: 0.5, repeat: isLoading ? Number.POSITIVE_INFINITY : 0 }}
-                className="absolute inset-0 bg-white/20"
+              {/* shimmer */}
+              <motion.span
+                className="absolute inset-0 bg-white/30"
+                animate={isLoading ? { x: ["-100%", "100%"] } : { x: "100%" }}
+                transition={{
+                  duration: 1,
+                  repeat: isLoading ? Infinity : 0,
+                  ease: "linear",
+                }}
               />
-              <span className="relative z-10">{isLoading ? "Sending..." : "Confirm Attendance"}</span>
+              <span className="relative z-10">
+                {isLoading ? "Đang gửi..." : "Xác nhận tham dự"}
+              </span>
             </motion.button>
-          </motion.form>
+          </form>
 
-          {/* Success message */}
-          {submitted && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="mt-8 p-6 bg-gold/10 border-2 border-gold rounded-lg text-center"
-            >
-              <motion.p className="font-serif text-2xl text-gold mb-2">✓</motion.p>
-              <p className="font-serif-body text-sage text-lg">Thank you! We will be in touch soon.</p>
-            </motion.div>
-          )}
+          {/* Success overlay */}
+          <AnimatePresence>
+            {submitted && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="
+                  absolute inset-0
+                  flex flex-col items-center justify-center
+                  bg-black/80 backdrop-blur-xl
+                  rounded-3xl
+                "
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200 }}
+                  className="text-green-400 text-4xl mb-3"
+                >
+                  ♥
+                </motion.div>
+                <p className="text-white text-lg mb-1">
+                  Cảm ơn bạn!
+                </p>
+                <p className="text-white/60 text-sm">
+                  Chúng mình rất mong được gặp bạn ✨
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
-      </section>
-    </>
+      </motion.div>
+    </section>
   )
 }

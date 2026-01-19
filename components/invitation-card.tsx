@@ -1,3 +1,5 @@
+import { motion } from "framer-motion"
+
 interface InvitationCardProps {
     bride: string
     groom: string
@@ -44,13 +46,13 @@ export default function InvitationCard({
     const year = match?.[3] ?? ''
 
     return (
-        <section className="relative max-w-md mx-auto mt-8 mb-12 pointer-events-auto">
+        <section className="relative max-w-full mx-auto pointer-events-auto">
 
             {/* ===== BLUR LAYER (KHÔNG BẮT CLICK) ===== */}
-            <div className="absolute inset-0 rounded-2xl bg-white/10 backdrop-blur-sm pointer-events-none" />
+            <div className="absolute inset-0 bg-white/10 backdrop-blur-sm pointer-events-none" />
 
             {/* ===== CONTENT LAYER ===== */}
-            <div className="relative z-10 border border-white/10 rounded-2xl p-6 text-center pointer-events-auto">
+            <div className="relative z-10 rounded-2xl p-6 text-center pointer-events-auto">
 
                 {/* ===== PARENTS ===== */}
                 <div className="flex items-start justify-center gap-4 mb-4">
@@ -80,7 +82,7 @@ export default function InvitationCard({
                 {/* ===== INVITE ===== */}
                 <div className="text-sm text-white/60 uppercase">Kính mời</div>
                 <div className="text-sm text-white/60 uppercase mb-2">
-                    tham dự tiệc chung vui của gia đình chúng tôi
+                    quý khách tham dự tiệc chung vui của gia đình chúng tôi
                 </div>
 
                 <h3 className="font-serif text-4xl text-cream mb-2">{bride}</h3>
@@ -102,17 +104,6 @@ export default function InvitationCard({
                 <div className="mb-4">
                     <div className="text-lg text-cream font-semibold">{venueName}</div>
                     <div className="text-sm text-white/50">{address}</div>
-                    <div className="mt-1 text-[11px] text-white/40">
-                        Tọa độ:&nbsp;
-                        <a
-                            href={mapsUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline pointer-events-auto"
-                        >
-                            {coordsDisplay}
-                        </a>
-                    </div>
                 </div>
 
                 {/* ===== DECOR SVG (NO CLICK) ===== */}
@@ -128,20 +119,58 @@ export default function InvitationCard({
                 </div>
 
                 {/* ===== MAP BUTTON (CLICK 100%) ===== */}
-                <div className="flex justify-center">
-                    <a
+                <div className="flex justify-center mt-4">
+                    <motion.a
                         href={mapsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="relative z-[9999] pointer-events-auto inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition"
+                        className="
+      relative z-[9999] pointer-events-auto
+      inline-flex items-center gap-3
+      px-6 py-3 rounded-full
+      bg-gradient-to-r from-emerald-500 to-green-600
+      text-white font-semibold tracking-wide
+      shadow-lg shadow-emerald-500/30
+      overflow-hidden
+    "
+                        whileHover={{ y: -3 }}
+                        whileTap={{ scale: 0.95 }}
                     >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 12 7 12s7-6.75 7-12c0-3.866-3.134-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
-                        </svg>
-                        {mapsLabel}
-                    </a>
-                </div>
+                        {/* Glow layer */}
+                        <span
+                            className="
+        absolute inset-0
+        bg-white/20 blur-xl
+        opacity-0 group-hover:opacity-100
+        transition-opacity
+      "
+                        />
 
+                        {/* Icon */}
+                        <motion.svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            animate={{ y: [0, -3, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                            className="relative z-10"
+                        >
+                            <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 12 7 12s7-6.75 7-12c0-3.866-3.134-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
+                        </motion.svg>
+
+                        {/* Text */}
+                        <span className="relative z-10">{mapsLabel}</span>
+
+                        {/* Ripple hover */}
+                        <motion.span
+                            className="absolute -inset-4 rounded-full bg-white/10"
+                            initial={{ scale: 0 }}
+                            whileHover={{ scale: 1 }}
+                            transition={{ duration: 0.4 }}
+                        />
+                    </motion.a>
+                </div>
             </div>
         </section>
     )
