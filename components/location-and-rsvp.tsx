@@ -194,16 +194,15 @@ export function LocationAndRsvp() {
               </label>
               <textarea
                 name="note"
-                maxLength={500}
+                maxLength={50}
                 value={formData.note}
                 onChange={handleChange}
                 placeholder="Hãy gửi những lời iu thương..."
                 className="w-full px-6 py-4 rounded-2xl bg-black/40 border border-white/10 text-white"
               />
               <p className="text-xs text-white/40 mt-1">
-                {formData.note.length}/500
+                {formData.note.length}/50
               </p>
-
             </div>
 
             {/* Submit */}
@@ -264,7 +263,7 @@ export function LocationAndRsvp() {
                   Cảm ơn bà nhooooooo!
                 </p>
                 <p className="text-white/60 text-sm">
-                  Chúng toai rất mong được gặp bàaaaaa ✨
+                  Chúng toai rất mong được gặp bà tại buổi tiệc nhoooooo ✨
                 </p>
               </motion.div>
             )}

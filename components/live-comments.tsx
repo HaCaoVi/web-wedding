@@ -16,7 +16,7 @@ type Comment = {
 }
 
 const BASE_X = 24
-const SPEED = 0.6
+const SPEED = 1
 const GAP = 12
 const ESTIMATED_HEIGHT = 140
 
