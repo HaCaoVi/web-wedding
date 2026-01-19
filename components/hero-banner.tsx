@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image"
+
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 
@@ -63,12 +65,15 @@ export function HeroBanner({ day, time }: IProps) {
   return (
     <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 pb-12">
       {/* Background image with overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/images/RIC_8927_2.jpg')",
-        }}
-      >
+      <div className="absolute inset-0">
+        <Image
+          src="/images/RIC_8927_2.jpg"
+          alt="Thanh Thuy & Cao Vi"
+          fill
+          className="object-cover"
+          priority
+          quality={90}
+        />
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60"></div>
       </div>

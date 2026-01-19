@@ -1,5 +1,6 @@
 "use client"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 const storyLines = [
   "Mọi thứ bắt đầu từ một lời chào giản đơn",
@@ -13,12 +14,13 @@ export function LoveStory() {
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center py-20 px-6 overflow-hidden">
       {/* Background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/images/RIC_8618.jpg')",
-        }}
-      >
+      <div className="absolute inset-0">
+        <Image
+          src="/images/RIC_8618.jpg"
+          alt="Love Story Background"
+          fill
+          className="object-cover"
+        />
         {/* Blur overlay for text readability */}
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
       </div>

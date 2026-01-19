@@ -154,7 +154,7 @@ export function IntroEnvelope({ onOpen }: IntroEnvelopeProps) {
                 <div className="absolute inset-0 flex items-center justify-center pt-12">
                   <div className="text-center">
                     <div className="font-serif text-4xl text-sage/60 mb-4">♥</div>
-                    <p className="font-serif-body text-sage/50 text-sm tracking-widest">TAP TO OPEN</p>
+                    <p className="font-serif-body text-sage/50 text-sm tracking-widest">Chạm để mở</p>
                   </div>
                 </div>
               </div>
@@ -192,7 +192,7 @@ export function IntroEnvelope({ onOpen }: IntroEnvelopeProps) {
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
             >
-              <p className="font-serif text-sage/40 text-xs tracking-widest">TOUCH TO BEGIN</p>
+              <p className="font-serif text-sage/40 text-xs tracking-widest">Chạm để bắt đầu</p>
             </motion.div>
           )}
         </div>

@@ -4,6 +4,7 @@ import { Playfair_Display, Lora } from "next/font/google"
 import "./globals.css"
 import { Analytics } from "@vercel/analytics/next"
 import localFont from "next/font/local"
+import { Suspense } from "react"
 
 const dancingScript = localFont({
   src: "../public/font/Dancing_Script/DancingScript-VariableFont_wght.ttf",
@@ -67,7 +68,9 @@ export default function RootLayout({
           ${dancingScript.variable}
           ${gaegu.variable}
           font-sans antialiased overflow-x-hidden`}>
-        {children}
+        <Suspense fallback={null}>
+          {children}
+        </Suspense>
         <Analytics />
       </body>
     </html>
