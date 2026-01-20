@@ -134,8 +134,8 @@ export default function InvitationCard({
                             px-8 py-3.5 rounded-full
                             bg-gradient-to-r from-gold-light to-gold-light
                             text-black text-sm sm:text-base font-semibold tracking-widest uppercase
-                            shadow-xl shadow-emerald-900/40
-                            hover:shadow-green-500/20
+                            shadow-xl shadow-gold-light/10
+                            hover:shadow-gold-light/20
                             transition-all duration-500
                         "
                         whileHover={{ y: -5, scale: 1.05 }}
