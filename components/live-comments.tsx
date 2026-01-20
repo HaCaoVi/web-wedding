@@ -68,7 +68,7 @@ const FloatingItem = memo(function FloatingItem({
 
     /* Fade theo vị trí */
     const fadeStart = viewportHeight * 0.8
-    const fadeEnd = viewportHeight * 0.4
+    const fadeEnd = viewportHeight * 0.6
 
     const opacity = useTransform(y, [fadeStart, fadeEnd], [1, 0])
 
@@ -77,7 +77,7 @@ const FloatingItem = memo(function FloatingItem({
         y.set(y.get() - SPEED * (delta / 16.67))
     })
 
-    const translateY = useTransform(y, v => `translateY(${v}px)`)
+    const translateY = useTransform(y, v => `translate3d(0, ${v}px, 0)`)
 
     return (
         <motion.div
@@ -89,18 +89,23 @@ const FloatingItem = memo(function FloatingItem({
                 right: BASE_X,
                 willChange: "transform, opacity",
                 backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+                perspective: 1000,
+                WebkitPerspective: 1000,
+                transformStyle: "preserve-3d",
                 pointerEvents: "none",
                 userSelect: "none",
                 WebkitUserSelect: "none",
                 touchAction: "none",
+                contain: "layout style paint",
             }}
             className="absolute top-0 w-auto max-w-[75vw] sm:max-w-[320px] md:max-w-sm lg:max-w-md"
             initial={{ scale: 0.94, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
         >
-            {/* Glass background */}
-            <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-black/40 backdrop-blur-md" />
+            {/* Glass background - reduced blur on mobile for performance */}
+            <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-black/50 sm:bg-black/40 backdrop-blur-sm sm:backdrop-blur-md" />
 
             {/* Content */}
             <div className="relative px-3 py-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl border border-white/10 shadow-xl">
@@ -160,7 +165,19 @@ export function FloatingComments() {
     let currentY = vh + 20
 
     return (
-        <div className="fixed inset-0 z-20 pointer-events-none overflow-hidden">
+        <div
+            className="fixed inset-0 z-20 overflow-hidden"
+            style={{
+                pointerEvents: "none",
+                touchAction: "none",
+                userSelect: "none",
+                WebkitUserSelect: "none",
+                contain: "strict",
+                isolation: "isolate",
+                transform: "translateZ(0)",
+                WebkitTransform: "translateZ(0)",
+            }}
+        >
             {comments.map((c, i) => {
                 const startY = currentY
                 currentY +=
