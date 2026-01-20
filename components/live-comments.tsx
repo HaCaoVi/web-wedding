@@ -8,27 +8,48 @@ import {
 } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 
+/* =====================
+   Types
+===================== */
 type Comment = {
     ItemInternalId: string
     name: string
     note: string
 }
 
-const BASE_X = 16   // Mobile default
+/* =====================
+   Constants
+===================== */
+const BASE_X = 16
 const SPEED = 1
 const GAP = 12
 const ESTIMATED_HEIGHT = 140
 
+/* =====================
+   Hook: Viewport Height (SSR-safe)
+===================== */
+function useViewportHeight() {
+    const [vh, setVh] = useState(0)
+
+    useEffect(() => {
+        setVh(window.innerHeight)
+    }, [])
+
+    return vh
+}
+
 /* =====================================================
-   FloatingItem - GPU Accelerated for Smooth Animation
+   FloatingItem
 ===================================================== */
-export function FloatingItem({
+function FloatingItem({
     data,
     startY,
     onHeightReady,
+    viewportHeight,
 }: {
     data: Comment
     startY: number
+    viewportHeight: number
     onHeightReady: (h: number) => void
 }) {
     const ref = useRef<HTMLDivElement>(null)
@@ -39,45 +60,23 @@ export function FloatingItem({
         y.set(startY)
     }, [startY, y])
 
-    /* Measure height - chỉ đo 1 lần */
+    /* Measure height (1 lần) */
     useEffect(() => {
         if (!ref.current) return
-
-        const measure = () => {
-            if (ref.current) {
-                onHeightReady(ref.current.offsetHeight + GAP)
-            }
-        }
-
-        // Đo sau khi render
-        requestAnimationFrame(measure)
+        onHeightReady(ref.current.offsetHeight + GAP)
     }, [onHeightReady])
 
-    /* Fade opacity theo vị trí Y */
-    const vh = typeof window !== "undefined" ? window.innerHeight : 800
-    const fadeStart = vh * 0.80
-    const fadeEnd = vh * 0.40
+    /* Fade theo vị trí */
+    const fadeStart = viewportHeight * 0.8
+    const fadeEnd = viewportHeight * 0.4
 
-    const fadeOpacity = useTransform(
-        y,
-        [fadeStart, fadeEnd],
-        [1, 0]
-    )
+    const opacity = useTransform(y, [fadeStart, fadeEnd], [1, 0])
 
-    /* Animation frame - chạy liên tục không ngừng */
+    /* Animation loop */
     useAnimationFrame((_, delta) => {
-        const velocity = SPEED * (delta / 16.67) // normalize 60fps
-        y.set(y.get() - velocity)
+        y.set(y.get() - SPEED * (delta / 16.67))
     })
-    useEffect(() => {
-        const prevent = (e: TouchEvent) => e.preventDefault()
 
-        document.addEventListener("touchmove", prevent, { passive: false })
-        return () =>
-            document.removeEventListener("touchmove", prevent)
-    }, [])
-
-    /* Transform Y cho GPU acceleration */
     const translateY = useTransform(y, v => `translateY(${v}px)`)
 
     return (
@@ -85,28 +84,23 @@ export function FloatingItem({
             ref={ref}
             style={{
                 transform: translateY,
-                opacity: fadeOpacity,
+                opacity,
                 left: BASE_X,
                 right: BASE_X,
-                // GPU acceleration hints
                 willChange: "transform, opacity",
                 backfaceVisibility: "hidden",
-                // Prevent all touch interactions
-                touchAction: "none",
+                pointerEvents: "none",
                 userSelect: "none",
                 WebkitUserSelect: "none",
-                pointerEvents: "none",
+                touchAction: "none",
             }}
             className="absolute top-0 w-auto max-w-[75vw] sm:max-w-[320px] md:max-w-sm lg:max-w-md"
             initial={{ scale: 0.94, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
         >
-            {/* Glass background - static blur for performance */}
-            <div
-                className="absolute inset-0 rounded-xl sm:rounded-2xl bg-black/40 backdrop-blur-md"
-                style={{ backfaceVisibility: "hidden" }}
-            />
+            {/* Glass background */}
+            <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-black/40 backdrop-blur-md" />
 
             {/* Content */}
             <div className="relative px-3 py-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl border border-white/10 shadow-xl">
@@ -130,9 +124,9 @@ export function FloatingComments() {
     const idsRef = useRef<Set<string>>(new Set())
     const [, forceUpdate] = useState(0)
 
-    const vh =
-        typeof window !== "undefined" ? window.innerHeight : 800
+    const vh = useViewportHeight()
 
+    /* Fetch comments */
     const fetchComments = async () => {
         const res = await fetch("/api/rsvp", { cache: "no-store" })
         if (!res.ok) return
@@ -150,11 +144,22 @@ export function FloatingComments() {
         setComments(prev => [...prev, ...newOnes])
     }
 
+    /* Polling */
     useEffect(() => {
         fetchComments()
         const i = setInterval(fetchComments, 4000)
         return () => clearInterval(i)
     }, [])
+
+    /* Block touch ONLY ONCE */
+    useEffect(() => {
+        const prevent = (e: TouchEvent) => e.preventDefault()
+        document.addEventListener("touchmove", prevent, { passive: false })
+        return () =>
+            document.removeEventListener("touchmove", prevent)
+    }, [])
+
+    if (!vh) return null
 
     let currentY = vh + 20
 
@@ -170,6 +175,7 @@ export function FloatingComments() {
                         key={c.ItemInternalId}
                         data={c}
                         startY={startY}
+                        viewportHeight={vh}
                         onHeightReady={h => {
                             if (heightsRef.current[i] !== h) {
                                 heightsRef.current[i] = h
