@@ -20,7 +20,7 @@
   --color-beige: var(--beige);
 
   /* Font system */
-  --font-sans: var(--font-gaegu);
+  --font-sans: var(--font-dancing);
   --font-serif: var(--font-dancing);
 }
 
@@ -37,7 +37,7 @@
   .glassmorphism {
     @apply bg-white/10 backdrop-blur-md border border-white/20;
   }
-  
+
   .glassmorphism-dark {
     @apply bg-black/40 backdrop-blur-xl border border-white/10;
   }
@@ -52,9 +52,12 @@
 }
 
 @keyframes glow-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
   }
+
   50% {
     box-shadow: 0 0 25px rgba(212, 165, 116, 0.6);
   }
