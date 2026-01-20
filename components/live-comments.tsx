@@ -87,16 +87,21 @@ export function FloatingItem({
     return (
         <motion.div
             ref={ref}
+            onContextMenu={e => e.preventDefault()}
             style={{
                 top: y,
                 left: BASE_X,
-                opacity: fadeOpacity, // 🔑 CHỈ 1 CURVE
+                opacity: fadeOpacity,
+                touchAction: "none",      // 🔑 CHẶN TOUCH GESTURE
+                userSelect: "none",       // 🔑 CHẶN LONG PRESS SELECT
+                WebkitUserSelect: "none",
             }}
             className="absolute max-w-xs pointer-events-none"
-            initial={{ scale: 0.94 }}      // ✅ chỉ scale
-            animate={{ scale: 1 }}         // ❌ KHÔNG animate opacity
+            initial={{ scale: 0.94 }}
+            animate={{ scale: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
         >
+
             {/* Glass background */}
             <motion.div
                 className="absolute inset-0 rounded-2xl bg-black/50"

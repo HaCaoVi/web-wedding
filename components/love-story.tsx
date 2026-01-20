@@ -1,4 +1,3 @@
-"use client"
 import { motion } from "framer-motion"
 import Image from "next/image"
 
@@ -19,7 +18,11 @@ export function LoveStory() {
           src="/images/RIC_8618.jpg"
           alt="Love Story Background"
           fill
+          sizes="100vw"
           className="object-cover"
+          quality={100}
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIhAAAgEDAwUBAAAAAAAAAAAAAQIDAAQRBSExBhITQVFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADBBH/2gAMAwEAAhEDEQA/AKWm6hqGpatplla3k6RXNzFE8YIG5YgH0c+6y7ruyOp6mCHQD1+qKKatpoUcIXUMzZn/2Q=="
         />
         {/* Blur overlay for text readability */}
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>

@@ -96,7 +96,9 @@ export function PhotoGallery() {
                   alt={image.alt}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  sizes="(max-width: 768px) 50vw, 25vw"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                  quality={90}
+                  loading="lazy"
                 />
 
                 {/* Overlay on hover */}
@@ -169,10 +171,12 @@ export function PhotoGallery() {
                 <Image
                   src={galleryImages[selectedIndex].src || "/placeholder.svg"}
                   alt={galleryImages[selectedIndex].alt}
-                  width={1200}
-                  height={800}
+                  width={1920}
+                  height={1280}
                   className="w-full h-auto rounded-lg"
                   priority
+                  quality={100}
+                  sizes="(max-width: 1280px) 100vw, 1280px"
                 />
               </motion.div>
 
