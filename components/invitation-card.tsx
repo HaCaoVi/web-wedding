@@ -152,7 +152,7 @@ export default function InvitationCard({
                             <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 12 7 12s7-6.75 7-12c0-3.866-3.134-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
                         </motion.svg>
 
-                        <span>{mapsLabel}</span>
+                        <div className="text-xs sm:text-sm text-black font-serif">{mapsLabel}</div>
                     </motion.a>
                 </div>
             </motion.div>

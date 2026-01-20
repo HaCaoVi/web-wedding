@@ -246,7 +246,7 @@ export function LocationAndRsvp() {
                   ease: "linear",
                 }}
               />
-              <span className="relative z-10">
+              <span className="relative z-10 font-serif">
                 {isLoading ? "Đang gửi..." : "Gửi lời chúc"}
               </span>
             </motion.button>
