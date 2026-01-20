@@ -1,17 +1,19 @@
 "use client"
 
 import { HeroBanner } from "@/components/hero-banner"
-import { LoveStory } from "@/components/love-story"
-import { PhotoGallery } from "@/components/photo-gallery"
-import { LocationAndRsvp } from "@/components/location-and-rsvp"
-import { Footer } from "@/components/footer"
 import InvitationCard from "@/components/invitation-card"
 import WeddingApp from "@/components/wedding-app"
 import { FloatingComments } from "@/components/live-comments"
 import { useSearchParams } from "next/navigation"
+import dynamic from "next/dynamic"
+
+const LoveStory = dynamic(() => import("@/components/love-story").then(mod => mod.LoveStory), { ssr: false })
+const PhotoGallery = dynamic(() => import("@/components/photo-gallery").then(mod => mod.PhotoGallery), { ssr: false })
+const LocationAndRsvp = dynamic(() => import("@/components/location-and-rsvp").then(mod => mod.LocationAndRsvp), { ssr: false })
+const Footer = dynamic(() => import("@/components/footer").then(mod => mod.Footer), { ssr: false })
+
 export default function Home() {
   const searchParams = useSearchParams()
-  console.log("🚀 ~ Home ~ searchParams:", searchParams)
   const author = searchParams?.get("author") ?? "ithufy"
   const time = author !== 'icao' ? "3:00 P.M" : "10:00 A.M"
   const day = author !== 'icao' ? 28 : 29
@@ -44,3 +46,4 @@ export default function Home() {
     </main>
   )
 }
+

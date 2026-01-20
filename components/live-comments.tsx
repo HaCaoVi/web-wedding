@@ -109,7 +109,7 @@ const FloatingItem = memo(function FloatingItem({
 
             {/* Content */}
             <div className="relative px-3 py-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl border border-white/10 shadow-xl">
-                <p className="text-[10px] sm:text-xs font-semibold text-green-400">
+                <p className="text-[10px] sm:text-xs font-semibold text-gold-light">
                     {data.name}
                 </p>
                 <p className="text-xs sm:text-sm text-white/95 leading-relaxed whitespace-pre-wrap">

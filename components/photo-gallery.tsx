@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback, useEffect } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
@@ -57,16 +57,33 @@ export function PhotoGallery() {
   const selectedImage = galleryImages.find((img) => img.id === selectedId)
   const selectedIndex = selectedImage ? galleryImages.indexOf(selectedImage) : 0
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length)
-  }
+  }, [])
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % galleryImages.length)
-  }
+  }, [])
+
+  const handleClose = useCallback(() => {
+    setSelectedId(null)
+  }, [])
+
+  useEffect(() => {
+    if (!selectedId) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleClose()
+      if (e.key === "ArrowLeft") handlePrevious()
+      if (e.key === "ArrowRight") handleNext()
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [selectedId, handleNext, handlePrevious, handleClose])
 
   return (
-    <section className="relative w-full py-20 px-6 bg-beige/20 overflow-hidden">
+    <section className="relative w-full py-20 px-4 md:px-6 bg-beige/20 overflow-hidden">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -77,7 +94,7 @@ export function PhotoGallery() {
         <div className="h-1 w-24 bg-gold mx-auto mb-12 rounded-full"></div>
 
         {/* Masonry gallery */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 mb-20">
           {galleryImages.map((image, idx) => (
             <motion.div
               key={image.id}
@@ -90,14 +107,14 @@ export function PhotoGallery() {
               }}
             >
               {/* Image container */}
-              <div className="relative w-full h-48 md:h-80 overflow-hidden">
+              <div className="relative w-full h-48 md:h-72 lg:h-80 overflow-hidden">
                 <Image
                   src={image.src || "/placeholder.svg"}
                   alt={image.alt}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                  quality={90}
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  quality={85}
                   loading="lazy"
                 />
 
@@ -105,29 +122,9 @@ export function PhotoGallery() {
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <motion.div className="text-white text-center" initial={{ scale: 0 }} whileHover={{ scale: 1 }}>
                     <div className="text-4xl mb-2">♥</div>
-                    <p className="text-sm font-serif-body">View</p>
+                    <p className="text-sm font-serif-body">Xem ảnh</p>
                   </motion.div>
                 </div>
-
-                {/* Sparkle effect on hover */}
-                <motion.div
-                  className="absolute inset-0 pointer-events-none"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                >
-                  {[...Array(3)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-1 h-1 rounded-full bg-gold"
-                      style={{
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                      }}
-                      animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
-                      transition={{ duration: 0.6, delay: i * 0.1 }}
-                    />
-                  ))}
-                </motion.div>
               </div>
             </motion.div>
           ))}
@@ -141,75 +138,75 @@ export function PhotoGallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 md:p-8"
-            onClick={() => setSelectedId(null)}
+            className="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4 md:p-8 backdrop-blur-sm"
+            onClick={handleClose}
           >
             {/* Close button */}
             <motion.button
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               whileHover={{ scale: 1.1 }}
-              onClick={() => setSelectedId(null)}
-              className="absolute top-4 right-4 md:top-8 md:right-8 bg-white/20 hover:bg-white/30 p-2 rounded-full z-20 transition-colors"
+              onClick={handleClose}
+              className="absolute top-4 right-4 md:top-8 md:right-8 bg-white/10 hover:bg-white/20 p-2 rounded-full z-[110] transition-colors border border-white/20"
             >
               <X className="w-6 h-6 text-white" />
             </motion.button>
 
             {/* Image container */}
             <div
-              className="relative w-full h-full max-h-screen flex items-center justify-center"
+              className="relative w-full h-full max-h-[90vh] flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
               <motion.div
-                key={selectedIndex}
-                initial={{ opacity: 0, scale: 0.9 }}
+                key={currentIndex}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
+                exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
-                className="relative w-full max-w-5xl h-auto"
+                className="relative w-full max-w-5xl h-full flex items-center justify-center"
               >
                 <Image
-                  src={galleryImages[selectedIndex].src || "/placeholder.svg"}
-                  alt={galleryImages[selectedIndex].alt}
-                  width={1920}
-                  height={1280}
-                  className="w-full h-auto rounded-lg"
+                  src={galleryImages[currentIndex].src || "/placeholder.svg"}
+                  alt={galleryImages[currentIndex].alt}
+                  width={1400}
+                  height={900}
+                  className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
                   priority
-                  quality={100}
-                  sizes="(max-width: 1280px) 100vw, 1280px"
+                  quality={90}
+                  sizes="(max-width: 1400px) 100vw, 1400px"
                 />
               </motion.div>
 
               {/* Previous button */}
               <motion.button
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.1, x: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={(e) => {
                   e.stopPropagation()
                   handlePrevious()
                 }}
-                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 p-3 md:p-4 rounded-full transition-colors z-10"
+                className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 md:p-4 rounded-full transition-colors z-[110] border border-white/10"
               >
                 <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 text-white" />
               </motion.button>
 
               {/* Next button */}
               <motion.button
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.1, x: 5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={(e) => {
                   e.stopPropagation()
                   handleNext()
                 }}
-                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 p-3 md:p-4 rounded-full transition-colors z-10"
+                className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 md:p-4 rounded-full transition-colors z-[110] border border-white/10"
               >
                 <ChevronRight className="w-6 h-6 md:w-8 md:h-8 text-white" />
               </motion.button>
 
               {/* Image counter */}
-              <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 bg-black/50 px-4 py-2 rounded-full">
-                <p className="text-white text-sm font-serif-body">
-                  {selectedIndex + 1} / {galleryImages.length}
+              <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 bg-black/60 px-4 py-2 rounded-full border border-white/10">
+                <p className="text-white text-sm font-serif-body tracking-wider">
+                  {currentIndex + 1} / {galleryImages.length}
                 </p>
               </div>
             </div>
