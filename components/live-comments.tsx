@@ -6,7 +6,7 @@ import {
     useTransform,
     useAnimationFrame,
 } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
+import { memo, useCallback, useEffect, useRef, useState } from "react"
 
 /* =====================
    Types
@@ -41,7 +41,7 @@ function useViewportHeight() {
 /* =====================================================
    FloatingItem
 ===================================================== */
-function FloatingItem({
+const FloatingItem = memo(function FloatingItem({
     data,
     startY,
     onHeightReady,
@@ -113,7 +113,7 @@ function FloatingItem({
             </div>
         </motion.div>
     )
-}
+})
 
 /* =====================================================
    FloatingComments
@@ -151,13 +151,9 @@ export function FloatingComments() {
         return () => clearInterval(i)
     }, [])
 
-    /* Block touch ONLY ONCE */
-    useEffect(() => {
-        const prevent = (e: TouchEvent) => e.preventDefault()
-        document.addEventListener("touchmove", prevent, { passive: false })
-        return () =>
-            document.removeEventListener("touchmove", prevent)
-    }, [])
+    /* NOTE: Removed global touchmove blocking - it was preventing all scrolling on mobile.
+       The FloatingItem already has pointer-events: none and touchAction: none,
+       which prevents interaction without blocking page scroll. */
 
     if (!vh) return null
 
