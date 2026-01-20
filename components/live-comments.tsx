@@ -4,7 +4,6 @@ import {
     motion,
     useMotionValue,
     useTransform,
-    useMotionTemplate,
     useAnimationFrame,
 } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
@@ -15,13 +14,13 @@ type Comment = {
     note: string
 }
 
-const BASE_X = 24
+const BASE_X = 16   // Mobile default
 const SPEED = 1
 const GAP = 12
 const ESTIMATED_HEIGHT = 140
 
 /* =====================================================
-   FloatingItem
+   FloatingItem - GPU Accelerated for Smooth Animation
 ===================================================== */
 export function FloatingItem({
     data,
@@ -40,83 +39,81 @@ export function FloatingItem({
         y.set(startY)
     }, [startY, y])
 
-    /* Measure height */
+    /* Measure height - chỉ đo 1 lần */
     useEffect(() => {
         if (!ref.current) return
 
-        const ro = new ResizeObserver(([entry]) => {
-            onHeightReady(entry.contentRect.height + GAP)
-        })
+        const measure = () => {
+            if (ref.current) {
+                onHeightReady(ref.current.offsetHeight + GAP)
+            }
+        }
 
-        ro.observe(ref.current)
-        return () => ro.disconnect()
+        // Đo sau khi render
+        requestAnimationFrame(measure)
     }, [onHeightReady])
 
-    /* Fade + blur theo tâm */
-    const vh =
-        typeof window !== "undefined" ? window.innerHeight : 800
+    /* Fade opacity theo vị trí Y */
+    const vh = typeof window !== "undefined" ? window.innerHeight : 800
+    const fadeStart = vh * 0.80
+    const fadeEnd = vh * 0.40
 
-    const centerY = useTransform(
-        y,
-        v => v + (ref.current?.offsetHeight ?? 0) / 2
-    )
-
-    const fadeStart = vh * 0.75
-    const fadeEnd = vh * 0.45
-
-    /* ✅ ONLY ONE OPACITY SOURCE */
     const fadeOpacity = useTransform(
-        centerY,
+        y,
         [fadeStart, fadeEnd],
         [1, 0]
     )
 
-    const blur = useTransform(
-        centerY,
-        [fadeStart, fadeEnd],
-        [2, 16]
-    )
-
-    const blurFilter = useMotionTemplate`blur(${blur}px)`
-
-    /* Animation frame */
-    useAnimationFrame(() => {
-        y.set(y.get() - SPEED)
+    /* Animation frame - chạy liên tục không ngừng */
+    useAnimationFrame((_, delta) => {
+        const velocity = SPEED * (delta / 16.67) // normalize 60fps
+        y.set(y.get() - velocity)
     })
+    useEffect(() => {
+        const prevent = (e: TouchEvent) => e.preventDefault()
+
+        document.addEventListener("touchmove", prevent, { passive: false })
+        return () =>
+            document.removeEventListener("touchmove", prevent)
+    }, [])
+
+    /* Transform Y cho GPU acceleration */
+    const translateY = useTransform(y, v => `translateY(${v}px)`)
 
     return (
         <motion.div
             ref={ref}
-            onContextMenu={e => e.preventDefault()}
             style={{
-                top: y,
-                left: BASE_X,
+                transform: translateY,
                 opacity: fadeOpacity,
-                touchAction: "none",      // 🔑 CHẶN TOUCH GESTURE
-                userSelect: "none",       // 🔑 CHẶN LONG PRESS SELECT
+                left: BASE_X,
+                right: BASE_X,
+                // GPU acceleration hints
+                willChange: "transform, opacity",
+                backfaceVisibility: "hidden",
+                // Prevent all touch interactions
+                touchAction: "none",
+                userSelect: "none",
                 WebkitUserSelect: "none",
+                pointerEvents: "none",
             }}
-            className="absolute max-w-xs pointer-events-none"
-            initial={{ scale: 0.94 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="absolute top-0 w-auto max-w-[75vw] sm:max-w-[320px] md:max-w-sm lg:max-w-md"
+            initial={{ scale: 0.94, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
         >
-
-            {/* Glass background */}
-            <motion.div
-                className="absolute inset-0 rounded-2xl bg-black/50"
-                style={{
-                    backdropFilter: "blur(22px)",
-                    filter: blurFilter,
-                }}
+            {/* Glass background - static blur for performance */}
+            <div
+                className="absolute inset-0 rounded-xl sm:rounded-2xl bg-black/40 backdrop-blur-md"
+                style={{ backfaceVisibility: "hidden" }}
             />
 
             {/* Content */}
-            <div className="relative px-4 py-3 rounded-2xl border border-white/10 shadow-xl">
-                <p className="text-xs font-semibold text-green-400">
+            <div className="relative px-3 py-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl border border-white/10 shadow-xl">
+                <p className="text-[10px] sm:text-xs font-semibold text-green-400">
                     {data.name}
                 </p>
-                <p className="text-sm text-white/95 leading-relaxed whitespace-pre-wrap">
+                <p className="text-xs sm:text-sm text-white/95 leading-relaxed whitespace-pre-wrap">
                     {data.note}
                 </p>
             </div>

@@ -97,7 +97,7 @@ export function LocationAndRsvp() {
                 required
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Nguyễn Văn A"
+                placeholder="Nhập tên ở đây nè bàaaaaa"
                 className="
                   w-full px-6 py-4 rounded-full
                   bg-black/40 border border-white/10
@@ -165,7 +165,7 @@ export function LocationAndRsvp() {
             shadow-2xl
           "
                     >
-                      {[1, 2, 3, 4, 5].map((num) => (
+                      {[0, 1, 2, 3, 4, 5].map((num) => (
                         <li
                           key={num}
                           onClick={() => {
@@ -238,36 +238,46 @@ export function LocationAndRsvp() {
           </form>
 
           {/* Success overlay */}
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {submitted && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                style={{
+                  touchAction: "none",
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                }}
                 className="
-                  absolute inset-0
-                  flex flex-col items-center justify-center
-                  bg-black/80 backdrop-blur-xl
-                  rounded-3xl
-                "
+        absolute inset-0
+        flex flex-col items-center justify-center
+        bg-black/80
+        backdrop-blur-md md:backdrop-blur-xl
+        rounded-3xl
+        pointer-events-none
+      "
               >
                 <motion.div
-                  initial={{ scale: 0 }}
+                  initial={{ scale: 0.6 }}
                   animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 200 }}
+                  transition={{ type: "spring", stiffness: 180, damping: 14 }}
                   className="text-green-400 text-4xl mb-3"
                 >
                   ♥
                 </motion.div>
+
                 <p className="text-white text-lg mb-1">
                   Cảm ơn bà nhooooooo!
                 </p>
-                <p className="text-white/60 text-sm">
+                <p className="text-white/60 text-sm text-center px-4">
                   Chúng toai rất mong được gặp bà tại buổi tiệc nhoooooo ✨
                 </p>
               </motion.div>
             )}
           </AnimatePresence>
+
         </motion.div>
       </motion.div>
     </section>
